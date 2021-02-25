@@ -1,6 +1,6 @@
 # navigo-kotlin-ng
 
-![https://kotl.in/jsirsupported](https://img.shields.io/badge/Kotlin%2FJS-IR%20supported-yellow)
+[![IR](https://img.shields.io/badge/Kotlin%2FJS-IR%20supported-yellow)](https://kotl.in/jsirsupported)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Kotlin definition files for the Navigo 8+ JavaScript router.

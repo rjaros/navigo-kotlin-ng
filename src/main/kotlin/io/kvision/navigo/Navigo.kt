@@ -22,11 +22,11 @@ external interface Match {
     var params: dynamic
 }
 
-typealias BeforeHook = (done: Function<*>, match: Match) -> Unit
+typealias BeforeHook = (done: () -> Unit, match: Match) -> Unit
 
 typealias AfterHook = (match: Match) -> Unit
 
-typealias LeaveHook = (done: Function<*>, match: dynamic /* Match | Array<Match> */) -> Unit
+typealias LeaveHook = (done: () -> Unit, match: dynamic /* Match | Array<Match> */) -> Unit
 
 typealias AlreadyHook = (match: Match) -> Unit
 
@@ -137,7 +137,7 @@ open external class Navigo(root: String, resolveOptions: ResolveOptions = define
     open fun on(path: RegExp, f: Handler, hooks: RouteHooks = definedExternally): Navigo
     open fun off(path: String): Navigo
     open fun off(path: RegExp): Navigo
-    open fun off(handler: Function<*>): Navigo
+    open fun off(handler: Handler): Navigo
     open fun navigate(to: String, options: NavigateOptions = definedExternally)
     open fun navigateByName(
         name: String,
@@ -151,7 +151,7 @@ open external class Navigo(root: String, resolveOptions: ResolveOptions = define
     ): dynamic /* Boolean | Match */
 
     open fun destroy()
-    open fun notFound(handler: Function<*>, hooks: RouteHooks = definedExternally): Navigo
+    open fun notFound(handler: Handler, hooks: RouteHooks = definedExternally): Navigo
     open fun updatePageLinks(): Navigo
     open fun link(path: String): String
     open fun generate(name: String, data: Any = definedExternally): String
@@ -171,14 +171,14 @@ open external class Navigo(root: String, resolveOptions: ResolveOptions = define
     ): dynamic /* Boolean | Match */
 
     open fun getCurrentLocation(): Match
-    open fun addBeforeHook(route: Route, hookFunction: Function<*>): Function<*>
-    open fun addBeforeHook(route: String, hookFunction: Function<*>): Function<*>
-    open fun addAfterHook(route: Route, hookFunction: Function<*>): Function<*>
-    open fun addAfterHook(route: String, hookFunction: Function<*>): Function<*>
-    open fun addAlreadyHook(route: Route, hookFunction: Function<*>): Function<*>
-    open fun addAlreadyHook(route: String, hookFunction: Function<*>): Function<*>
-    open fun addLeaveHook(route: Route, hookFunction: Function<*>): Function<*>
-    open fun addLeaveHook(route: String, hookFunction: Function<*>): Function<*>
+    open fun addBeforeHook(route: Route, hookFunction: (done: () -> Unit) -> Unit): () -> Unit
+    open fun addBeforeHook(route: String, hookFunction: (done: () -> Unit) -> Unit): () -> Unit
+    open fun addAfterHook(route: Route, hookFunction: () -> Unit): () -> Unit
+    open fun addAfterHook(route: String, hookFunction: () -> Unit): () -> Unit
+    open fun addAlreadyHook(route: Route, hookFunction: () -> Unit): () -> Unit
+    open fun addAlreadyHook(route: String, hookFunction: () -> Unit): () -> Unit
+    open fun addLeaveHook(route: Route, hookFunction: (done: () -> Unit) -> Unit): () -> Unit
+    open fun addLeaveHook(route: String, hookFunction: (done: () -> Unit) -> Unit): () -> Unit
     open fun getRoute(nameOrHandler: String): Route?
-    open fun getRoute(nameOrHandler: Function<*>): Route?
+    open fun getRoute(nameOrHandler: Handler): Route?
 }

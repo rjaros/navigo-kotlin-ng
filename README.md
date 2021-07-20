@@ -9,7 +9,7 @@ https://github.com/krasimir/navigo
 
 ### Project info
 
-The definition files are based on Navigo version 8.8.12.
+The definition files are based on Navigo version 8.11.1.
 
 ### How to use
 

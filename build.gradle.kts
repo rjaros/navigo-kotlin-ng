@@ -31,7 +31,7 @@ kotlin {
 }
 
 dependencies {
-    implementation(npm("navigo", "8.8.12"))
+    implementation(npm("navigo", "^8.11.1"))
 }
 
 val sourcesJar by tasks.registering(Jar::class) {

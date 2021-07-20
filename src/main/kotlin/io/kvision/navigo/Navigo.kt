@@ -102,6 +102,18 @@ external interface ResolveOptions {
         set(value) = definedExternally
 }
 
+external interface RouterOptions : ResolveOptions {
+    var linksSelector: String?
+        get() = definedExternally
+        set(value) = definedExternally
+}
+
+external interface GenerateOptions {
+    var includeRoot: Boolean?
+        get() = definedExternally
+        set(value) = definedExternally
+}
+
 external interface QContext {
     var currentLocationPath: String
     var to: String
@@ -125,7 +137,7 @@ external interface QContext {
 
 @JsModule("navigo")
 @JsNonModule
-open external class Navigo(root: String, resolveOptions: ResolveOptions = definedExternally) {
+open external class Navigo(root: String, options: RouterOptions = definedExternally) {
     open var root: String
     open var routes: Array<Route>
     open var destroyed: Boolean
@@ -154,7 +166,7 @@ open external class Navigo(root: String, resolveOptions: ResolveOptions = define
     open fun notFound(handler: Handler, hooks: RouteHooks = definedExternally): Navigo
     open fun updatePageLinks(): Navigo
     open fun link(path: String): String
-    open fun generate(name: String, data: Any = definedExternally): String
+    open fun generate(name: String, data: Any = definedExternally, options: GenerateOptions = definedExternally): String
     open fun hooks(hooks: RouteHooks): Navigo
     open fun getLinkPath(link: Any): String
     open fun match(path: String): dynamic /* Boolean | Array<Match> */

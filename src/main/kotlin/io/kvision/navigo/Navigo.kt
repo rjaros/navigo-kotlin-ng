@@ -24,7 +24,7 @@ external interface Match {
 
 @Suppress("IMPLEMENTING_FUNCTION_INTERFACE")
 abstract class DoneFunction : () -> Unit {
-    operator fun invoke(continueResolution: Boolean = true) {
+    operator fun invoke(continueResolution: Boolean) {
         this.asDynamic()(continueResolution)
     }
 }

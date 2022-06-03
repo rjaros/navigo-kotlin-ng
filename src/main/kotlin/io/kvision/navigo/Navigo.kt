@@ -22,11 +22,18 @@ external interface Match {
     var params: dynamic
 }
 
-typealias BeforeHook = (done: () -> Unit, match: Match) -> Unit
+@Suppress("IMPLEMENTING_FUNCTION_INTERFACE")
+abstract class DoneFunction : () -> Unit {
+    operator fun invoke(continueResolution: Boolean = true) {
+        this.asDynamic()(continueResolution)
+    }
+}
+
+typealias BeforeHook = (done: DoneFunction, match: Match) -> Unit
 
 typealias AfterHook = (match: Match) -> Unit
 
-typealias LeaveHook = (done: () -> Unit, match: dynamic /* Match | Array<Match> */) -> Unit
+typealias LeaveHook = (done: DoneFunction, match: dynamic /* Match | Array<Match> */) -> Unit
 
 typealias AlreadyHook = (match: Match) -> Unit
 
@@ -183,14 +190,14 @@ open external class Navigo(root: String, options: RouterOptions = definedExterna
     ): dynamic /* Boolean | Match */
 
     open fun getCurrentLocation(): Match
-    open fun addBeforeHook(route: Route, hookFunction: (done: () -> Unit) -> Unit): () -> Unit
-    open fun addBeforeHook(route: String, hookFunction: (done: () -> Unit) -> Unit): () -> Unit
+    open fun addBeforeHook(route: Route, hookFunction: (done: DoneFunction) -> Unit): () -> Unit
+    open fun addBeforeHook(route: String, hookFunction: (done: DoneFunction) -> Unit): () -> Unit
     open fun addAfterHook(route: Route, hookFunction: () -> Unit): () -> Unit
     open fun addAfterHook(route: String, hookFunction: () -> Unit): () -> Unit
     open fun addAlreadyHook(route: Route, hookFunction: () -> Unit): () -> Unit
     open fun addAlreadyHook(route: String, hookFunction: () -> Unit): () -> Unit
-    open fun addLeaveHook(route: Route, hookFunction: (done: () -> Unit) -> Unit): () -> Unit
-    open fun addLeaveHook(route: String, hookFunction: (done: () -> Unit) -> Unit): () -> Unit
+    open fun addLeaveHook(route: Route, hookFunction: (done: DoneFunction) -> Unit): () -> Unit
+    open fun addLeaveHook(route: String, hookFunction: (done: DoneFunction) -> Unit): () -> Unit
     open fun getRoute(nameOrHandler: String): Route?
     open fun getRoute(nameOrHandler: Handler): Route?
 }
